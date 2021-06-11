@@ -1,7 +1,7 @@
 use std::sync::MutexGuard;
 
 use crate::commands::*;
-// use crate::profile;
+use crate::profiler;
 use crate::state::DebugState;
 
 pub fn init(debug_state: &mut MutexGuard<DebugState>) {
@@ -27,8 +27,8 @@ fn set_snapshot_interval_command(
         _ => Err(String::from("Argument should be int")),
     }?;
 
-    // let mut profile_state = profile::get_profile_state();
-    // profile::update_snapshot_interval(&mut profile_state, interval as usize);
+    let mut profile_state = profiler::get_profile_state();
+    profiler::update_snapshot_interval(&mut profile_state, interval as usize);
 
     Ok(())
 }

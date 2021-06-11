@@ -153,10 +153,6 @@ macro_rules! timed_block {
     };
 }
 
-fn get_debug_state<'a>() -> MutexGuard<'a, DebugState> {
-    DEBUG_STATE.lock().expect("failed to get debug state")
-}
-
 pub fn get_profile_state<'a>() -> MutexGuard<'a, ProfileState> {
     PROFILE_STATE.lock().expect("failed to get profile state")
 }
