@@ -1,5 +1,18 @@
-use vm::{gapi, module::{CLIENT_ID, Module, ModuleState}};
-use vm_math::{CameraMatrices, Mat4f, OthroCameraTransforms, Transforms2D, Vec2f, create_2d_model_matrix, create_ortho_camera_matrices};
+pub mod commands;
+pub mod profiler;
+
+mod commands_registry;
+mod state;
+
+use crate::state::DEBUG_STATE;
+use vm::{
+    gapi,
+    module::{Module, ModuleState, CLIENT_ID},
+};
+use vm_math::{
+    create_2d_model_matrix, create_ortho_camera_matrices, CameraMatrices, Mat4f,
+    OthroCameraTransforms, Transforms2D, Vec2f,
+};
 
 pub struct DebugServicesModule {
     frametime_text_mvp_matrix: Mat4f,
@@ -41,7 +54,10 @@ impl Module for DebugServicesModule {
         "tech.paws.debug_services"
     }
 
-    fn init(&mut self, _: &mut ModuleState) {}
+    fn init(&mut self, _: &mut ModuleState) {
+        let debug_state = &mut DEBUG_STATE.lock().expect("failed to get debug state");
+        commands_registry::init(debug_state);
+    }
 
     fn shutdown(&mut self, _: &mut ModuleState) {}
 
