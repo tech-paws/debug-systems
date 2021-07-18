@@ -6,8 +6,6 @@ use std::thread;
 
 use lazy_static::lazy_static;
 
-use crate::state::{DebugState, DEBUG_STATE};
-
 pub const PERFORMANCE_RECORDS_CAPACITY: usize = 512;
 pub const PERFORMANCE_COUNTER_LOG_SIZE: usize = 120; // max entires
 pub const PERFORMANCE_COUNTER_STATE_SIZE: usize = 60; // max entires

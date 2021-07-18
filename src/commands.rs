@@ -87,12 +87,10 @@ fn parse_command(command: &str) -> Result<CommandRequest, String> {
 
     if tokens.is_empty() {
         Err(String::from("Command can't be empty"))
-    }
-    else {
+    } else {
         let command = if let Token::Id(id) = tokens[0] {
             id
-        }
-        else {
+        } else {
             return Err(String::from("Parse error"));
         };
 
@@ -114,7 +112,7 @@ fn parse_command(command: &str) -> Result<CommandRequest, String> {
     }
 }
 
-fn tokenize<'a>(command: &'a str) -> Vec<Token<'a>> {
+fn tokenize(command: &str) -> Vec<Token<'_>> {
     let mut tokens = Vec::new();
 
     let re = Regex::new(r###"(?P<bool>true|false)|("(?P<string>[^"]*)")|(?P<id>[a-zA-Z_][a-zA-Z:0-9_-]+)|(?P<number>[0-9]+(\.[0-9]+)?)"###).unwrap();
@@ -122,14 +120,11 @@ fn tokenize<'a>(command: &'a str) -> Vec<Token<'a>> {
     for cap in re.captures_iter(command) {
         if let Some(m) = cap.name("id") {
             tokens.push(Token::Id(m.as_str()));
-        }
-        else if let Some(m) = cap.name("string") {
+        } else if let Some(m) = cap.name("string") {
             tokens.push(Token::String(m.as_str()));
-        }
-        else if let Some(m) = cap.name("number") {
+        } else if let Some(m) = cap.name("number") {
             tokens.push(Token::Number(m.as_str().parse().unwrap()));
-        }
-        else if let Some(m) = cap.name("bool") {
+        } else if let Some(m) = cap.name("bool") {
             tokens.push(Token::Bool(m.as_str().parse().unwrap()));
         }
     }
@@ -153,8 +148,7 @@ fn execute_command_request(
 pub fn require(cond: bool, msg: &str) -> Result<(), String> {
     if cond {
         Ok(())
-    }
-    else {
+    } else {
         Err(String::from(msg))
     }
 }

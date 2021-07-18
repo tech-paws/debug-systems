@@ -10,10 +10,10 @@ lazy_static! {
 }
 
 pub enum DebugVariable {
-    Bool(BoolVariable),
-    Group(GroupVariable),
-    Profiler(ProfilerVariable),
-    ProfilerLogSlider(ProfilerLogSliderVariable),
+    Bool(usize, BoolVariable),
+    Group(usize, GroupVariable),
+    Profiler(usize, ProfilerVariable),
+    ProfilerLogSlider(usize, ProfilerLogSliderVariable),
 }
 
 #[derive(Default)]
@@ -67,11 +67,11 @@ impl Default for DebugState {
             commands: CommandsState::default(),
             variables: GroupVariable::new(
                 "Debug Menu",
-                vec![DebugVariable::Group(GroupVariable::new(
+                vec![DebugVariable::Group(1, GroupVariable::new(
                     "Profiler",
                     vec![
-                        DebugVariable::ProfilerLogSlider(ProfilerLogSliderVariable::default()),
-                        DebugVariable::Profiler(ProfilerVariable::default()),
+                        DebugVariable::ProfilerLogSlider(2, ProfilerLogSliderVariable::default()),
+                        DebugVariable::Profiler(3, ProfilerVariable::default()),
                     ],
                 ))],
             ),
